@@ -40,6 +40,16 @@ $ads = [
             'Picture_URL' => 'img/lot-6.jpg'
         ]
 ];
+function adding_ruble($input) {
+    $number = ceil($input);
+    if ($number < 1000) {
+        $output = $number;
+    }
+    elseif ($number >= 1000) {
+        $output = number_format($number,0,' ',' ');
+    }
+    return $output . " ₽";
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -116,7 +126,7 @@ $ads = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"> <?=$d['Price'];?> <b class="rub">р</b></span>
+                            <span class="lot__cost"> <?=adding_ruble($d['Price']);?> </span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
