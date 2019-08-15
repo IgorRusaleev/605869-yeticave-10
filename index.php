@@ -52,11 +52,13 @@ function adding_ruble($input) {
     return $output . " ₽";
 }
 
-$page_content = include_template('templates/main.php', ['ads' => $ads]);
-$layout_content = include_template('templates/layout.php', [
+$page_content = include_template('main.php', ['ads' => $ads, 'cats' => $cats,]);
+$layout_content = include_template('layout.php', [
 'content' => $page_content,
-'cat' => $cats,
-'title' => 'Главная страница'
+'cats' => $cats,
+'title' => 'Главная страница',
+'user_name' => $user_name,
+'is_auth' => $is_auth
 ]);
 print($layout_content);
 ?>
