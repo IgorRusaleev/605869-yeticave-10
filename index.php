@@ -1,6 +1,7 @@
 <?php
 $is_auth = rand(0, 1);
 $user_name = 'Игорь Русалеев'; // укажите здесь ваше имя
+require_once('helpers.php');
 $cats = ["Доски и лыжи","Крепления","Ботинки","Одежда","Инструменты","Разное"];
 $ads = [
         [
@@ -50,7 +51,6 @@ function adding_ruble($input) {
     }
     return $output . " ₽";
 }
-?>
 
 $page_content = include_template('templates/main.php', ['ads' => $ads]);
 $layout_content = include_template('templates/layout.php', [
@@ -59,3 +59,4 @@ $layout_content = include_template('templates/layout.php', [
 'title' => 'Главная страница'
 ]);
 print($layout_content);
+?>
