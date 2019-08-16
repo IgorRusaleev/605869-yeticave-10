@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set("display_error", true);
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
  *
