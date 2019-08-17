@@ -28,7 +28,8 @@
                             <span class="lot__cost"> <?=adding_ruble(htmlspecialchars($d['Price']));?> </span>
                         </div>
                         <div class="lot__timer timer">
-                            12:23
+                            <?=(get_dt_range($d['expiration_date'])['hour']);?>часов
+                            <?=get_dt_range($d['expiration_date'])['min']);?>минут
                         </div>
                     </div>
                 </div>
