@@ -27,9 +27,12 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost"> <?=adding_ruble(htmlspecialchars($d['Price']));?> </span>
                         </div>
-                        <div class="lot__timer timer">
-                            <?=(get_dt_range($d['expiration_date'])['hour']);?>часов
-                            <?=get_dt_range($d['expiration_date'])['min']);?>минут
+                        <div class="lot__timer timer"
+                            <?php if (get_dt_range($d['expiration_date']['hour']) < 1): ?>
+                             timer--finishing
+                            <?php endif; ?>>
+                            <?=get_dt_range($d['expiration_date']['hour']);?>часов
+                            <?=get_dt_range($d['expiration_date']['min']);?>минут
                         </div>
                     </div>
                 </div>
