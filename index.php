@@ -16,35 +16,35 @@ $ads = [
             'cat' => $cats[0],
             'Price' => '159999',
             'Picture_URL' => 'img/lot-2.jpg',
-            'expiration_date' => '2019-12-27'
+            'expiration_date' => '2019-11-27'
         ],
         [
             'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
             'cat' => $cats[1],
             'Price' => '8000',
             'Picture_URL' => 'img/lot-3.jpg',
-            'expiration_date' => '2019-12-26'
+            'expiration_date' => '2019-11-16'
         ],
         [
             'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
             'cat' => $cats[2],
             'Price' => '10999',
             'Picture_URL' => 'img/lot-4.jpg',
-            'expiration_date' => '2019-12-25'
+            'expiration_date' => '2019-12-21'
         ],
         [
             'name' => 'Куртка для сноуборда DC Mutiny Charocal',
             'cat' => $cats[3],
             'Price' => '7500',
             'Picture_URL' => 'img/lot-5.jpg',
-            'expiration_date' => '2019-12-23'
+            'expiration_date' => '2019-11-13'
         ],
         [
             'name' => 'Маска Oakley Canopy',
             'cat' => $cats[5],
             'Price' => '5400',
             'Picture_URL' => 'img/lot-6.jpg',
-            'expiration_date' => '2019-12-20'
+            'expiration_date' => '2019-12-11'
         ]
 ];
 function adding_ruble($input) {
@@ -59,10 +59,11 @@ function adding_ruble($input) {
 }
 
 function get_dt_range($input) {
-    $next_date = date_create("input");
+    $next_date = date_create($input);
     $today = date_create("now");
     $dif = date_diff($next_date, $today);
-    $hour_count = date_interval_format($dif, "%H");
+    $day_count = date_interval_format($dif, "%d");
+    $hour_count = date_interval_format($dif, "%H") + ($day_count * 24);
     $min_count = date_interval_format($dif, "%I");
     $hour_and_min_count = str_pad($hour_count, 6, ", $min_count", STR_PAD_RIGHT);
     $hour_and_min = ['hour' => $hour_count, 'min' => $min_count];
