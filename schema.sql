@@ -16,16 +16,16 @@ CREATE TABLE lot (
                      initial_price DECIMAL(10,2),
                      completion_date DATETIME,
                      step_rate DECIMAL(6,2),
-                     user_created_lot CHAR(128),
-                     user_winner CHAR (128),
-                     character_code CHAR(64)
+                     user_id INT,
+                     user_winner INT,
+                     category_id INT
 );
 CREATE TABLE rate (
                       rate_id INT AUTO_INCREMENT PRIMARY KEY,
                       date DATETIME,
                       rate DECIMAL(10,2),
-                      name_user CHAR(128),
-                      name_lot CHAR(128)
+                      user_id INT,
+                      lot_id INT
 );
 CREATE TABLE user (
                       user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,6 +35,6 @@ CREATE TABLE user (
                       password CHAR(64),
                       avatar CHAR (128),
                       contact_information CHAR(128),
-                      name_lot CHAR(128),
-                      rate DECIMAL(10,2)
+                      lot_id INT,
+                      rate_id INT
 );
