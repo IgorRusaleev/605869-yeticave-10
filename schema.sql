@@ -34,7 +34,7 @@ CREATE TABLE user (
                       name_user CHAR(128) ,
                       password CHAR(64),
                       avatar CHAR (128),
-                      contact information CHAR(128),
+                      contact_information CHAR(128),
                       name_lot CHAR(128),
                       rate DECIMAL(10,2)
 );
