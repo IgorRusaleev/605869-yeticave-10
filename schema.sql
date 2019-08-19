@@ -34,7 +34,5 @@ CREATE TABLE user (
                       name_user CHAR(128) ,
                       password CHAR(64),
                       avatar CHAR (128),
-                      contact_information CHAR(128),
-                      lot_id INT,
-                      rate_id INT
+                      contact_information CHAR(128)
 );
