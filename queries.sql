@@ -93,3 +93,21 @@ INSERT INTO rate SET
                      rate  = '1500.00',
                      user_id = '3',
                      lot_id = '1';
+
+/*Получение всех категорий*/
+SELECT * FROM category ORDER BY name_cat ASC;
+
+/*Получение самых новых, открытых лотов*/
+SELECT initial_price, image, rate, name_cat FROM  category c
+INNER JOIN lot l ON c.category_id = l.category_id
+INNER JOIN rate r ON l.user_id = r.user_id;
+
+/*Показ лота по его id*/
+SELECT  lot_id, name_cat FROM category c
+INNER  JOIN lot l ON c.category_id = l.category_id;
+
+/*Обновление названия лота по его идентификатору*/
+SELECT * FROM lot ORDER BY lot_id ASC;
+
+/*Получение списока ставок для лота по его идентификатору с сортировкой по дате*/
+SELECT * FROM rate ORDER BY date ASC;
