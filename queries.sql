@@ -107,7 +107,8 @@ SELECT  lot_id, name_cat FROM category c
 INNER  JOIN lot l ON c.category_id = l.category_id;
 
 /*Обновление названия лота по его идентификатору*/
-SELECT * FROM lot ORDER BY lot_id ASC;
+UPDATE lot SET name_lot = 'Rossignol District Snowboard’
+WHERE lot_id = '1';
 
 /*Получение списока ставок для лота по его идентификатору с сортировкой по дате*/
 SELECT * FROM rate ORDER BY date ASC;
