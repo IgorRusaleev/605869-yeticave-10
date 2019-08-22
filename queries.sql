@@ -98,9 +98,9 @@ INSERT INTO rate SET
 SELECT * FROM category ORDER BY name_cat ASC;
 
 /*Получение самых новых, открытых лотов*/
-SELECT initial_price, image, rate, name_cat FROM  category c
+SELECT name_lot, description, initial_price, image, name_cat FROM  category c
 INNER JOIN lot l ON c.category_id = l.category_id
-INNER JOIN rate r ON l.user_id = r.user_id;
+ORDER BY creation_date ASC;
 
 /*Показ лота по его id*/
 SELECT  lot_id, name_cat FROM category c
