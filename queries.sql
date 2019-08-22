@@ -100,7 +100,8 @@ SELECT * FROM category ORDER BY name_cat ASC;
 /*Получение самых новых, открытых лотов*/
 SELECT name_lot, description, initial_price, image, name_cat FROM  category c
 INNER JOIN lot l ON c.category_id = l.category_id
-ORDER BY creation_date ASC;
+WHERE now() < completion_date
+ORDER BY creation_date DESC;
 
 /*Показ лота по его id*/
 SELECT  lot_id, name_cat FROM category c
