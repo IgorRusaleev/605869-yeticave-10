@@ -2,6 +2,9 @@
 $is_auth = rand(0, 1);
 $user_name = 'Игорь Русалеев'; // укажите здесь ваше имя
 require_once('helpers.php');
+/*подключение к MySQL*/
+$con = mysqli_connect("localhost", "root", "","yeticave");
+
 $cats = ["Доски и лыжи","Крепления","Ботинки","Одежда","Инструменты","Разное"];
 $ads = [
         [
