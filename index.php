@@ -6,6 +6,7 @@ require_once('helpers.php');
 $link = mysqli_connect("localhost", "root", "","yeticave");
 mysqli_set_charset($link, "utf8");
 $ads = [];
+$cats = [];
 $content = '';
 if (!$link) {
     $error = mysqli_connect_error();
@@ -13,13 +14,15 @@ if (!$link) {
 }
 else {
     /*Запрос на получение новых, открытых лотов*/
-    $sql = 'SELECT name_lot, description, initial_price, image, name_cat FROM  category c '
+    $sql = 'SELECT name_lot, description, initial_price, image, expiration_date, name_cat FROM  category c '
         . 'INNER JOIN lot l ON c.category_id = l.category_id '
-        . 'WHERE now() < completion_date '
-        . 'ORDER BY creation_date DESC\'';
+        . 'WHERE now() < expiration_date '
+        . 'ORDER BY creation_date DESC';
     $ads = db_fetch_data($link, $sql, $data = []);
 }
-$cats = ["Доски и лыжи","Крепления","Ботинки","Одежда","Инструменты","Разное"];
+/*Получение всех категорий*/
+$sql = 'SELECT * FROM category ORDER BY name_cat ASC';
+$cats = db_fetch_data($link, $sql, $data = []);
 
 function adding_ruble($input) {
     $number = ceil($input);
