@@ -2,51 +2,28 @@
 $is_auth = rand(0, 1);
 $user_name = 'Игорь Русалеев'; // укажите здесь ваше имя
 require_once('helpers.php');
-$cats = ["Доски и лыжи","Крепления","Ботинки","Одежда","Инструменты","Разное"];
-$ads = [
-        [
-            'name' => '2014 Rossignol District Snowboard',
-            'cat' => $cats[0],
-            'Price' => '10999',
-            'Picture_URL' => 'img/lot-1.jpg',
-            'expiration_date' => '2019-12-30'
-        ],
-        [
-            'name' => 'DC Ply Mens 2016/2017 Snowboard',
-            'cat' => $cats[0],
-            'Price' => '159999',
-            'Picture_URL' => 'img/lot-2.jpg',
-            'expiration_date' => '2019-11-27'
-        ],
-        [
-            'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-            'cat' => $cats[1],
-            'Price' => '8000',
-            'Picture_URL' => 'img/lot-3.jpg',
-            'expiration_date' => '2019-11-16'
-        ],
-        [
-            'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
-            'cat' => $cats[2],
-            'Price' => '10999',
-            'Picture_URL' => 'img/lot-4.jpg',
-            'expiration_date' => '2019-12-21'
-        ],
-        [
-            'name' => 'Куртка для сноуборда DC Mutiny Charocal',
-            'cat' => $cats[3],
-            'Price' => '7500',
-            'Picture_URL' => 'img/lot-5.jpg',
-            'expiration_date' => '2019-11-13'
-        ],
-        [
-            'name' => 'Маска Oakley Canopy',
-            'cat' => $cats[5],
-            'Price' => '5400',
-            'Picture_URL' => 'img/lot-6.jpg',
-            'expiration_date' => '2019-12-11'
-        ]
-];
+/*подключение к MySQL*/
+$link = mysqli_connect("localhost", "root", "","yeticave");
+mysqli_set_charset($link, "utf8");
+$ads = [];
+$cats = [];
+$content = '';
+if (!$link) {
+    $error = mysqli_connect_error();
+    $content = include_template('error.php', ['error' => $error]);
+}
+else {
+    /*Запрос на получение новых, открытых лотов*/
+    $sql = 'SELECT name_lot, description, initial_price, image, expiration_date, name_cat FROM  category c '
+        . 'INNER JOIN lot l ON c.category_id = l.category_id '
+        . 'WHERE now() < expiration_date '
+        . 'ORDER BY creation_date DESC';
+    $ads = db_fetch_data($link, $sql, $data = []);
+}
+/*Получение всех категорий*/
+$sql = 'SELECT * FROM category ORDER BY name_cat ASC';
+$cats = db_fetch_data($link, $sql, $data = []);
+
 function adding_ruble($input) {
     $number = ceil($input);
     if ($number < 1000) {

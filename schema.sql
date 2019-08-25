@@ -14,7 +14,7 @@ CREATE TABLE lot (
                      description CHAR(128),
                      image CHAR(128),
                      initial_price DECIMAL(10,2),
-                     completion_date DATETIME,
+                     expiration_date DATETIME,
                      step_rate DECIMAL(6,2),
                      user_id INT,
                      user_winner INT,
