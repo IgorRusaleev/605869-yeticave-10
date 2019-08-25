@@ -35,10 +35,10 @@
                                 <?=adding_ruble(htmlspecialchars($d['initial_price']));?>
                             </span>
                         </div>
-                        <div class="lot__timer timer"
-                            <?php if (get_dt_range($d['expiration_date'])['hour'] < 1): ?>
-                                class="timer--finishing"
-                            <?php endif; ?>>Осталось времени:<br/>
+                        <div class="lot__timer timer <?php if (get_dt_range($d['expiration_date'])['hour'] < 1): ?>
+                        timer--finishing
+                        <?php endif; ?>"
+>Осталось времени:<br/>
                             <?=get_dt_range($d['expiration_date'])['hour'];?> часов
                             <?=get_dt_range($d['expiration_date'])['min'];?> минут
                         </div>
