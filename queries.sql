@@ -1,4 +1,4 @@
-/*Создание таблицы категорий*/
+# Создание таблицы категорий
 INSERT INTO category SET
                          name_cat = 'Доски и лыжи',
                          character_code = 'boards';
@@ -21,7 +21,7 @@ INSERT INTO category SET
                          name_cat = 'Аксессуары',
                          character_code = 'accessories';
 
-/*Создание таблицы пользователей*/
+# Создание таблицы пользователей
 INSERT INTO user SET
                      registration_date = '2018-11-27',
                      email = 'V_Ivanov@index.ru',
@@ -35,7 +35,7 @@ INSERT INTO user SET
                      password = 'P_Ivanov',
                      contact_information = '553-555-73';
 
-/*Создание таблицы списка объявлений*/
+#Создание таблицы списка объявлений
 INSERT INTO lot SET
                     creation_date = '2019-05-13',
                     name_lot  = '2014 Rossignol District Snowboard',
@@ -92,7 +92,7 @@ INSERT INTO lot SET
                     expiration_date = '2019-12-31',
                     user_id = '2',
                     category_id = '4';
-/*Добавление ставок*/
+# Добавление ставок
 INSERT INTO rate SET
                      date = '2019-05-21',
                      rate  = '11000.00',
@@ -104,22 +104,22 @@ INSERT INTO rate SET
                      user_id = '3',
                      lot_id = '1';
 
-/*Получение всех категорий*/
+# Получение всех категорий
 SELECT * FROM category ORDER BY name_cat ASC;
 
-/*Получение самых новых, открытых лотов*/
+# Получение самых новых, открытых лотов
 SELECT name_lot, description, initial_price, image, expiration_date, name_cat FROM  category c
 INNER JOIN lot l ON c.category_id = l.category_id
 WHERE now() < expiration_date
 ORDER BY creation_date DESC;
 
-/*Показ лота по его id*/
+# Показ лота по его id
 SELECT  lot_id, name_cat FROM category c
 INNER  JOIN lot l ON c.category_id = l.category_id;
 
-/*Обновление названия лота по его идентификатору*/
+# Получение списока ставок для лота по его идентификатору с сортировкой по дате
+SELECT * FROM rate ORDER BY date ASC;
+
+# Обновление названия лота по его идентификатору
 UPDATE lot SET name_lot = 'Rossignol District Snowboard’
 WHERE lot_id = '1';
-
-/*Получение списока ставок для лота по его идентификатору с сортировкой по дате*/
-SELECT * FROM rate ORDER BY date ASC;
