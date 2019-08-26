@@ -24,7 +24,7 @@
                 <div class="lot__info">
                     <span class="lot__category"> <?=$d['name_cat'];?> </span>
                     <h3 class="lot__title">
-                        <a class="text-link" href="pages/lot.html">
+                        <a class="text-link" href=<?="lot.php" . "?" . "id=" . $d['lot_id'];?>>
                             <?=htmlspecialchars($d['name_lot']);?>
                         </a>
                     </h3>
@@ -37,8 +37,7 @@
                         </div>
                         <div class="lot__timer timer <?php if (get_dt_range($d['expiration_date'])['hour'] < 1): ?>
                         timer--finishing
-                        <?php endif; ?>"
->Осталось времени:<br/>
+                        <?php endif; ?>">Осталось времени:<br/>
                             <?=get_dt_range($d['expiration_date'])['hour'];?> часов
                             <?=get_dt_range($d['expiration_date'])['min'];?> минут
                         </div>

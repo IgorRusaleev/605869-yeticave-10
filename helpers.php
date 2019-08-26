@@ -21,6 +21,30 @@ function db_insert_data($link, $sql, $data = []) {
     }
     return $result;
 }
+/*функция форматиования цены: разделение пробелом 2-х знаков и добавление знака ₽*/
+function adding_ruble($input) {
+    $number = ceil($input);
+    if ($number < 1000) {
+        $output = $number;
+    }
+    elseif ($number >= 1000) {
+        $output = number_format($number,0,' ',' ');
+    }
+    return $output . " ₽";
+}
+/*функция для определения количества часов и минут до даты в будующем*/
+function get_dt_range($input) {
+    $next_date = date_create($input);
+    $today = date_create("now");
+    $dif = date_diff($next_date, $today);
+    $day_count = date_interval_format($dif, "%d");
+    $hour_count = date_interval_format($dif, "%H") + ($day_count * 24);
+    $min_count = date_interval_format($dif, "%I");
+    $hour_and_min_count = str_pad($hour_count, 6, ", $min_count", STR_PAD_RIGHT);
+    $hour_and_min = ['hour' => $hour_count, 'min' => $min_count];
+    return $hour_and_min;
+}
+
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
  *
