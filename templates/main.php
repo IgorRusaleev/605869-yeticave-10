@@ -44,6 +44,6 @@
                     </div>
                 </div>
             </li>
-        <?php endforeach; ?>
+        <?php endforeach;?>
     </ul>
 </section>

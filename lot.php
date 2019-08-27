@@ -1,25 +1,18 @@
-<?=$id = $_GET['id'] ?? 'http_response_code(404)';
-require_once('helpers.php');
-$link = mysqli_connect("localhost", "root", "","yeticave");
-mysqli_set_charset($link, "utf8");
-$lot = [];
-if (!$link) {
-$error = mysqli_connect_error();
-$content = include_template('error.php', ['error' => $error]);
-}
-else {
+<?=require_once('helpers.php');?>
+<?=require_once('index.php');?>
+<?=$id = $_GET['id'];?>
+<?=$id = $_GET['id'] ?? 'http_response_code(404)';?>
+<?=mysqli_set_charset($link, "utf8");?>
+<?=$lot = [];?>
 /*Запрос на получение новых, открытых лотов*/
-$sql = 'SELECT lot_id, name_lot, description, initial_price, image, expiration_date, step_rate, name_cat FROM  category c '
-. 'INNER JOIN lot l ON c.category_id = l.category_id '
-. 'WHERE $id = lot_id';
-$lot = db_fetch_data($link, $sql, $data = []);
-}?>
+<?=$sql = 'SELECT lot_id, name_lot, description, initial_price, image, expiration_date, step_rate, name_cat FROM  category c '
+    . 'INNER JOIN lot l ON c.category_id = l.category_id '
+    . 'WHERE $id = lot_id';
+$lot = db_fetch_data($link, $sql, $data = []);?>
 /*Получение всех категорий*/
 <?=$sql = 'SELECT * FROM category ORDER BY name_cat ASC';
-$cats = db_fetch_data($link, $sql, $data = []);
-?>
+$cats = db_fetch_data($link, $sql, $data = []);?>
 
-<? ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
