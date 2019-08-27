@@ -14,7 +14,7 @@ if (!$link) {
 }
 else {
     /*Запрос на получение новых, открытых лотов*/
-    $sql = 'SELECT lot_id, name_lot, description, initial_price, image, expiration_date, name_cat FROM  category c '
+    $sql = 'SELECT lot_id, name_lot, description, initial_price, image, expiration_date, step_rate, name_cat FROM  category c '
         . 'INNER JOIN lot l ON c.category_id = l.category_id '
         . 'WHERE now() < expiration_date '
         . 'ORDER BY creation_date DESC';
@@ -23,7 +23,6 @@ else {
 /*Получение всех категорий*/
 $sql = 'SELECT * FROM category ORDER BY name_cat ASC';
 $cats = db_fetch_data($link, $sql, $data = []);
-
 
 $page_content = include_template('main.php', ['ads' => $ads, 'cats' => $cats,]);
 $layout_content = include_template('layout.php', [
