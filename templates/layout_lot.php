@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?/*=$lot['name_lot'];*/?></title>
+    <title><?=$lot[0]["name_lot"];?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -38,13 +38,13 @@
 
         <nav class="nav">
             <ul class="nav__list container">
-                <?php /*foreach ($cats as $cat): */?>
+                <?php foreach ($cats as $cat): ?>
                 <li class="nav__item">
                     <a href="all-lots.html">
-                        <?/*=htmlspecialchars($cat['name_cat'] . ' (' . $cat['character_code'] . ')');*/?>
+                        <?=htmlspecialchars($cat['name_cat'] . ' (' . $cat['character_code'] . ')');?>
                     </a>
                 </li>
-                <?php /*endforeach; */?>
+                <?php endforeach; ?>
             </ul>
         </nav>
 
@@ -57,13 +57,13 @@
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <?php /*foreach ($cats as $cat): */?>
+            <?php foreach ($cats as $cat): ?>
             <li class="nav__item">
                 <a href="all-lots.html">
-                    <?/*=htmlspecialchars($cat['name_cat'] . ' (' . $cat['character_code'] . ')');*/?>
+                    <?=htmlspecialchars($cat['name_cat'] . ' (' . $cat['character_code'] . ')');?>
                 </a>
             </li>
-            <?php /*endforeach; */?>
+            <?php endforeach; ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
