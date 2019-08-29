@@ -3,7 +3,7 @@ require_once('helpers.php');
 /*подключение к MySQL*/
 $link = mysqli_connect("localhost", "root", "","yeticave");
 mysqli_set_charset($link, "utf8");
-$id = $_GET["id"] ?? 'http_response_code(404)';
+$id = $_GET["id"] ?? header('http_response_code(404)');
 $lot = [];
 $cats = [];
 $content = "";
@@ -16,7 +16,7 @@ else {
     $sql = "SELECT lot_id, name_lot, description, initial_price, image, expiration_date, step_rate, name_cat FROM  category c "
         . "INNER JOIN lot l ON c.category_id = l.category_id "
         . "WHERE $id = lot_id";
-    $lot = db_fetch_data($link, $sql, $data = []) ?? 'http_response_code(404)';
+    $lot = db_fetch_data($link, $sql, $data = []) ?? header('http_response_code(404)');
 }
 /*Получение всех категорий*/
 $sql = "SELECT * FROM category ORDER BY name_cat ASC";
