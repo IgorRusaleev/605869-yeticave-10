@@ -11,7 +11,7 @@ CREATE TABLE lot (
                      lot_id INT AUTO_INCREMENT PRIMARY KEY,
                      creation_date DATETIME,
                      name_lot CHAR(128),
-                     description CHAR(128),
+                     description TEXT(2000),
                      image CHAR(128),
                      initial_price DECIMAL(10,2),
                      expiration_date DATETIME,

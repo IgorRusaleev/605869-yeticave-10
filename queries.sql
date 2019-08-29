@@ -17,9 +17,6 @@ INSERT INTO category SET
 INSERT INTO category SET
                          name_cat = 'Разное',
                          character_code = 'other';
-INSERT INTO category SET
-                         name_cat = 'Аксессуары',
-                         character_code = 'accessories';
 
 # Создание таблицы пользователей
 INSERT INTO user SET
@@ -43,14 +40,17 @@ INSERT INTO lot SET
                     initial_price = '10999',
                     expiration_date = '2019-12-30',
                     user_id = '1',
+                    step_rate = '10',
                     category_id = '1';
 INSERT INTO lot SET
                     creation_date = '2019-05-21',
                     name_lot  = 'DC Ply Mens 2016/2017 Snowboard',
+                    description = 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.',
                     image = 'img/lot-2.jpg',
                     initial_price = '159999',
                     expiration_date = '2019-11-27',
                     user_id = '2',
+                    step_rate = '10',
                     category_id = '1';
 INSERT INTO lot SET
                     creation_date = '2019-06-13',
@@ -59,6 +59,7 @@ INSERT INTO lot SET
                     initial_price = '8000',
                     expiration_date = '2019-11-16',
                     user_id = '3',
+                    step_rate = '10',
                     category_id = '2';
 INSERT INTO lot SET
                     creation_date = '2019-06-24',
@@ -67,6 +68,7 @@ INSERT INTO lot SET
                     initial_price = '10999',
                     expiration_date = '2019-12-21',
                     user_id = '2',
+                    step_rate = '10',
                     category_id = '3';
 INSERT INTO lot SET
                     creation_date = '2019-07-03',
@@ -75,6 +77,7 @@ INSERT INTO lot SET
                     initial_price = '7500',
                     expiration_date = '2019-11-13',
                     user_id = '3',
+                    step_rate = '10',
                     category_id = '4';
 INSERT INTO lot SET
                     creation_date = '2019-07-03',
@@ -83,6 +86,7 @@ INSERT INTO lot SET
                     initial_price = '5400',
                     expiration_date = '2019-12-11',
                     user_id = '2',
+                    step_rate = '10',
                     category_id = '6';
 INSERT INTO lot SET
                     creation_date = '2019-08-25',
@@ -91,6 +95,7 @@ INSERT INTO lot SET
                     initial_price = '19700',
                     expiration_date = '2019-12-31',
                     user_id = '2',
+                    step_rate = '10',
                     category_id = '4';
 # Добавление ставок
 INSERT INTO rate SET
