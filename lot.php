@@ -13,21 +13,18 @@ $id = htmlspecialchars($_GET["id"]) ?? header('http_response_code(404)');
 $lot = [];
 $cats = [];
 $content = "";
+$sql = "SELECT lot_id, name_lot, description, initial_price, image, expiration_date, step_rate, name_cat FROM  category c "
+    . "INNER JOIN lot l ON c.category_id = l.category_id "
+    . "WHERE $id = lot_id";
 if (!$link) {
     $error = mysqli_connect_error();
     $content = include_template("error.php", ["error" => $error]);
 }
 else {
     /*Запрос на получение новых, открытых лотов*/
-    $sql = "SELECT lot_id, name_lot, description, initial_price, image, expiration_date, step_rate, name_cat FROM  category c "
-        . "INNER JOIN lot l ON c.category_id = l.category_id "
-        . "WHERE $id = lot_id";
-    if (isset(db_fetch_data($link, $sql, $data = [])) {
-        $lot = db_fetch_data($link, $sql, $data = []);
-    }
-    else {
-        header('http_response_code(404)');
-    }
+    $lot = db_fetch_data($link, $sql, $data = []) ?? header('http_response_code(404)');
+
+
 }
 /*Получение всех категорий*/
 $sql = "SELECT * FROM category ORDER BY name_cat ASC";
