@@ -3,7 +3,7 @@ require_once('helpers.php');
 /*подключение к MySQL*/
 $link = mysqli_connect("localhost", "root", "","yeticave");
 mysqli_set_charset($link, "utf8");
-$id = $_GET["id"] ?? header('http_response_code(404)');
+$id = htmlspecialchars($_GET["id"]) ?? header('http_response_code(404)');
 $lot = [];
 $cats = [];
 $content = "";
@@ -21,7 +21,8 @@ else {
 /*Получение всех категорий*/
 $sql = "SELECT * FROM category ORDER BY name_cat ASC";
 $cats = db_fetch_data($link, $sql, $data = []);
-$page_content = include_template("main_lot.php", ["lot" => $lot, "cats" => $cats]);
+$is_auth = rand(0, 1);
+$page_content = include_template("main_lot.php", ["is auth" => $is_auth, "lot" => $lot, "cats" => $cats]);
 $layout_content = include_template("layout_lot.php", [
     "content" => $page_content,
     "cats" => $cats,
