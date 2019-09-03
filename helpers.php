@@ -45,6 +45,34 @@ function get_dt_range($input) {
     return $hour_and_min;
 }
 
+/*функция для получения значения поля*/
+function getPostVal($name) {
+    return $_POST[$name] ?? "";
+}
+/*функция для валидации категорий*/
+function validateCategory($name, $allowed_list) {
+    $id = $_POST[$name];
+
+    if (!in_array($id, $allowed_list)) {
+        return "Указана несуществующая категория";
+    }
+
+    return null;
+}
+/*функция для валидации длины поля*/
+function validateLength($name, $min, $max) {
+    $len = strlen($_POST[$name]);
+
+    if ($len < $min or $len > $max) {
+        return "Значение должно быть от $min до $max символов";
+    }
+
+    return null;
+}
+
+
+
+
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
  *
@@ -120,6 +148,10 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
     return $stmt;
 }
 
+function show_error(&$content, $error) {
+    $content = include_template('error.php', ['error' => $error]);
+}
+
 /**
  * Возвращает корректную форму множественного числа
  * Ограничения: только для целых чисел
@@ -187,6 +219,14 @@ function include_template($name, array $data = []) {
     $result = ob_get_clean();
 
     return $result;
+}
+
+function validateFilled($name) {
+    if (empty($_POST[$name])) {
+        return "Это поле должно быть заполнено";
+    }
+
+    return null;
 }
 
 

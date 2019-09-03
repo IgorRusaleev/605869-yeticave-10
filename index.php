@@ -1,6 +1,6 @@
 <?php
 $is_auth = rand(0, 1);
-$user_name = 'Игорь Русалеев'; // укажите здесь ваше имя
+$user_name = 'Игорь Русалеев';
 require_once('helpers.php');
 /*подключение к MySQL*/
 $link = mysqli_connect("localhost", "root", "","yeticave");
