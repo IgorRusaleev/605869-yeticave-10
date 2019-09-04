@@ -32,15 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     /*Скопируем POST массив в переменную $lot*/
     $lot = $_POST;
 
-    /*защита от инъекций*/
-    $initial_price = htmlspecialchars($lot['initial_price']);
-    $step_rate = htmlspecialchars($lot['step_rate']);
-    $expiration_date = htmlspecialchars($lot['expiration_date']);
-    $safe_name_lot = htmlspecialchars($lot['name_lot']);
-    $safe_description = htmlspecialchars($lot['description']);
-    $safe_initial_price = htmlspecialchars($lot['initial_price']);
-    $safe_step_rate = htmlspecialchars($lot['step_rate']);
-    $safe_expiration_date = htmlspecialchars($lot['expiration_date']);
+    $creation_date = "NOW()";
+    $name_lot = "$_POST[name_lot]";
+    $description = "$_POST[description]";
+    $initial_price = "$_POST[initial_price]";
+    $expiration_date = "$_POST[expiration_date]";
+    $step_rate = "$_POST[step_rate]";
+    $user_id = "1";
+    $category_id = $_POST["category_id"];
 
     /*определить список полей, которые собираемся валидировать*/
     $required = ['name_lot', 'description', 'initial_price', 'step_rate', 'expiration_date', 'category_id'];
@@ -60,13 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return validateLength('description', 10, 2000);
         },
         'initial_price' => function () use ($initial_price) {
-            if (!is_int($initial_price)) {
+            if ((!is_numeric($initial_price)) and ($initial_price > 0)) {
                 return "Начальная цена должна быть числом";
             }
             return null;
         },
         'step_rate' => function () use ($step_rate) {
-            if (!is_int($step_rate)) {
+            if ((!is_numeric($step_rate)) and ($step_rate > 0)) {
                 return "Шаг ставки должен быть числом ";
             }
             return null;
@@ -120,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         else {
             move_uploaded_file($tmp_name, 'uploads/' . $filename);
             $lot['image'] = $filename;
+            $image = $lot['image'];
         }
     }
 
@@ -132,31 +132,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (count($errors)) {
 
         /*если были ошибки, то показываем их пользователю вместе с формой*/
-        $page_content = include_template("main_add-lot.php", ['lot' => $lot, 'errors' => $errors, "cats" => $cats]);
+        $page_content = include_template("main_add-lot.php", ['lot' => $lot,
+            'errors' => $errors,
+            "cats" => $cats]);
     }
     else {
         /*до выполнения задания #15 user_id любое число*/
-        $sql = 'INSERT INTO lot (creation_date, name_lot, user_id, description, initial_price, step_rate, expiration_date, image, category_id) VALUES (1, NOW(), $safe_name_lot, 1, $safe_description, $safe_initial_price, $safe_step_rate, $safe_expiration_date, ?, ?)';
 
-        /*С помощью функции-помощника сформируем подготовленное выражение*/
-        $stmt = db_get_prepare_stmt($link, $sql, $lot);
+        $sql = 'INSERT INTO lot (creation_date, name_lot, description, image, initial_price, expiration_date,
+                 step_rate, user_id, category_id) VALUES (?, ?, ?, ?, ?,  ?, ?, ?, ?)';
 
-        /*выполняем полученное выражение*/
-        $res = mysqli_stmt_execute($stmt);
+        /*Подготавливаем выражение*/
+        $stmt = mysqli_prepare($link, $sql);
+
+        /*Передаем в выражение значения от пользователя*/
+        mysqli_stmt_bind_param($stmt, 'isssiiiii', $creation_date, $name_lot, $description, $image, $initial_price, $expiration_date, $step_rate, $user_id, $category_id);
+
+//        Выполняем выражение
+        mysqli_stmt_execute($stmt);
 
         /*Если запрос выполнен успешно, то получаем ID нового лота и перенаправляем
          пользователя на страницу с её просмотром*/
-        if ($res) {
-            $lot_id = mysqli_insert_id($link);
-            header("Location: lot.php?id=" . $lot_id);
-        }
+
+//         var_dump($errors);die();
+
+        $lot_id = mysqli_insert_id($link);
+        header("Location: lot.php?id=" . $lot_id);
+
     }
 }
 
 /*Если метод не POST, значит форма не была отправлена и валидировать ничего не надо,
 поэтому просто подключаем шаблон показа формы*/
 else {
-    $page_content = include_template("main_add-lot.php", ["cats" => $cats]);
+    $page_content = include_template("main_add-lot.php", [
+        "cats" => $cats,
+        "lot" => $lot,
+        'user_name' => $user_name,
+        'is_auth' => $is_auth]);
 }
 
 $layout_content = include_template("layout_add-lot.php", [
@@ -164,8 +177,7 @@ $layout_content = include_template("layout_add-lot.php", [
     "cats" => $cats,
     "lot" => $lot,
     'user_name' => $user_name,
-    'is_auth' => $is_auth
-]);
+    'is_auth' => $is_auth]);
 
 print($layout_content);
 ?>

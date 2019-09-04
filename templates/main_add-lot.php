@@ -71,5 +71,10 @@
             </div>
         </div>
         <span class="form__error form__error--bottom">Пожалуйста, заполните форму корректно.</span>
+        <ul>
+            <?php foreach ($errors as $val): ?>
+                <li><strong><?= $val; ?>:</strong></li>
+            <?php endforeach; ?>
+        </ul>
         <button type="submit" class="button">Добавить лот</button>
     </form>
