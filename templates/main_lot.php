@@ -24,7 +24,7 @@
                     </div>
                     <div class="lot-item__min-cost">
                         Мин. ставка <span><?=adding_ruble($lot[0]['step_rate']);?></span>
-                    </div>12 000 р
+                    </div>
                 </div>
                 <?php if ($is_auth = 1): ?>
                 <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
