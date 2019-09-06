@@ -31,7 +31,6 @@
             </nav>
         </div>
     </header>
-    <?php print_r($_POST); ?>
     <main><?= $content; ?></main>
 </div>
 

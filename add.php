@@ -30,22 +30,12 @@ else {
          /*Скопируем POST массив в переменную $lot*/
          $lot = $_POST;
 
-         $creation_date = "NOW()";
-         $lot['creation_date'] = $creation_date;
          $name_lot = "$_POST[name_lot]";
-         $lot['name_lot'] = $name_lot;
          $description = "$_POST[description]";
-         $lot['description'] = $description;
          $initial_price = "$_POST[initial_price]";
-         $lot['initial_price'] = $initial_price;
          $expiration_date = "$_POST[expiration_date]";
-         $lot['expiration_date'] = $expiration_date;
          $step_rate = "$_POST[step_rate]";
-         $lot['step_rate'] = $step_rate;
-         $user_id = "1";
-         $lot['user_id'] = $user_id;
          $category_id = $_POST["category_id"];
-         $lot['category_id'] = $category_id;
 
          /*определить список полей, которые собираемся валидировать*/
          $required = ['name_lot', 'description', 'initial_price', 'step_rate', 'expiration_date', 'category_id'];
@@ -144,9 +134,17 @@ else {
          }
          else {
              /*до выполнения задания #15 user_id любое число*/
-
+             $lot = [
+                 'name_lot' => $name_lot,
+                 'description' => $description,
+                 'image' => 'uploads/' . $image,
+                 'initial_price' => $initial_price,
+                 'expiration_date' => $expiration_date,
+                 'step_rate' => $step_rate,
+                 'category_id' => $category_id
+                 ];
              $sql = 'INSERT INTO lot (creation_date, name_lot, description, image, initial_price, expiration_date,
-                 step_rate, user_id, category_id) VALUES (?, ?, ?, ?, ?,  ?, ?, ?, ?)';
+                 step_rate, user_id, category_id) VALUES (NOW(), ?, ?, ?, ?,  ?, ?, 1, ?)';
 
              /*Подготавливаем выражение*/
              $stmt = db_get_prepare_stmt($link, $sql, $lot);
