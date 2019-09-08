@@ -30,11 +30,11 @@ else {
          /*Скопируем POST массив в переменную $lot*/
          $lot = $_POST;
 
-         $name_lot = "$_POST[name_lot]";
-         $description = "$_POST[description]";
-         $initial_price = "$_POST[initial_price]";
-         $expiration_date = "$_POST[expiration_date]";
-         $step_rate = "$_POST[step_rate]";
+         $name_lot = $_POST["name_lot"];
+         $description = $_POST["description"];
+         $initial_price = $_POST["initial_price"];
+         $expiration_date = $_POST["expiration_date"];
+         $step_rate = $_POST["step_rate"];
          $category_id = $_POST["category_id"];
 
          /*определить список полей, которые собираемся валидировать*/
@@ -98,16 +98,21 @@ else {
              $tmp_name = $_FILES['image']['tmp_name'];
              $image = $_FILES['image']['name'];
 
-             /*создание нового имени файла*/
-             $filename = uniqid() . '.jpeg';
-
              /*получим информацию о типе файла*/
              $finfo = finfo_open(FILEINFO_MIME_TYPE);
              $file_type = finfo_file($finfo, $tmp_name);
 
              /*Если тип загруженного файла не является jpeg, то добавляем новую ошибку в список ошибок валидации*/
-             if ($file_type !== "image/jpeg") {
-                 $errors['file'] = 'Загрузите картинку в формате jpeg';
+             if ($file_type !== "image/jpeg" or $file_type !== "image/png") {
+                 $errors['file'] = 'Загрузите картинку в формате jpeg или png';
+             }
+
+             /*создание нового имени файла*/
+             if ($file_type == "image/jpeg") {
+                 $filename = uniqid() . '.jpeg';
+             }
+             elseif ($file_type == "image/png") {
+                 $filename = uniqid() . '.png';
              }
 
 //        Если файл jpeg, то мы копируем его в директорию где лежат все изображения и добавляем путь
