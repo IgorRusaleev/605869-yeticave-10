@@ -16,7 +16,7 @@
         <h2>Открытые лоты</h2>
     </div>
     <ul class="lots__list">
-        <?php foreach ($ads as $d): ?>
+        <?php foreach ($lot as $d): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?=htmlspecialchars($d['image']);?>" width="350" height="260" alt="">
