@@ -1,8 +1,6 @@
 <?php
-require_once('helpers.php');
-/*подключение к MySQL*/
-$link = mysqli_connect("localhost", "root", "","yeticave");
-mysqli_set_charset($link, "utf8");
+require_once 'init.php';
+
 if (isset($_GET["id"])) {
     $id = htmlspecialchars($_GET["id"]);
 }
@@ -10,9 +8,7 @@ else {
     header('http_response_code(404)');
 }
 $id = htmlspecialchars($_GET["id"]) ?? header('http_response_code(404)');
-$lot = [];
-$cats = [];
-$content = "";
+
 if (!$link) {
     $error = mysqli_connect_error();
     $content = include_template('error.php', ['error' => $error]);
@@ -33,10 +29,12 @@ else {
 $sql = "SELECT * FROM category ORDER BY name_cat ASC";
 $cats = db_fetch_data($link, $sql, $data = []);
 $is_auth = rand(0, 1);
+$title = $lot[0]["name_lot"];
 $page_content = include_template("main_lot.php", ["is auth" => $is_auth, "lot" => $lot, "cats" => $cats]);
 $layout_content = include_template("layout_lot.php", [
     "content" => $page_content,
     "cats" => $cats,
+    'title' => $title,
     "lot" => $lot
 ]);
 print($layout_content);

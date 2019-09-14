@@ -1,14 +1,7 @@
 <?php
 $is_auth = rand(0, 1);
 $user_name = 'Игорь Русалеев';
-require_once('helpers.php');
-$lot = [];
-$cats = [];
-$content = "";
-
-/*подключение к MySQL*/
-$link = mysqli_connect("localhost", "root", "", "yeticave");
-mysqli_set_charset($link, "utf8");
+require_once 'init.php';
 
 if (!$link) {
     $error = mysqli_connect_error();
@@ -37,7 +30,7 @@ else {
          $step_rate = $_POST["step_rate"];
          $category_id = $_POST["category_id"];
 
-         /*определить список полей, которые собираемся валидировать*/
+         /*определяем список полей, которые собираемся валидировать*/
          $required = ['name_lot', 'description', 'initial_price', 'step_rate', 'expiration_date', 'category_id'];
 
          /*определяем пустой массив $errors, который будем заполнять ошибками валидации*/
@@ -174,6 +167,7 @@ $layout_content = include_template('layout_add-lot.php', [
     'content' => $page_content,
     'cats' => $cats,
     'lot' => $lot,
+    'title' => 'Добавление лота',
     'user_name' => $user_name,
     'is_auth' => $is_auth]);
 

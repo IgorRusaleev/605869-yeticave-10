@@ -61,10 +61,10 @@ function validateCategory($name, $allowed_list) {
 }
 /*функция для валидации длины поля*/
 function validateLength($name, $min, $max) {
-    $len = strlen($_POST[$name]);
+    $len = mb_strlen($_POST[$name]);
 
     if ($len < $min or $len > $max) {
-        return "Значение должно быть от $min до $max символов";
+        return "Длина поля должно быть от $min до $max символов";
     }
 
     return null;

@@ -1,18 +1,7 @@
-    <nav class="nav">
-        <ul class="nav__list container">
-            <?php foreach ($cats as $cat): ?>
-                <li class="promo__item promo__item--boards">
-                    <a class="promo__link" href="pages/all-lots.html">
-                        <?=htmlspecialchars($cat['name_cat'] . ' (' . $cat['character_code'] . ')');?>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
     <form class="form form--add-lot container
     <?php if (count($errors)): ?>
     form--invalid
-    <?php endif; ?>" action="" method="post" enctype="multipart/form-data">
+    <?php endif; ?>" action="add.php" method="post" enctype="multipart/form-data">
         <h2>Добавление лота</h2>
         <div class="form__container-two">
             <div class="form__item
@@ -89,6 +78,7 @@
             </div>
         </div>
         <span class="form__error form__error--bottom">Пожалуйста, заполните форму корректно.<br>
-            <?=$errors['file'] ?? ""; ?></span>
+            <?=$errors['file'] ?? ""; ?>
+        </span>
         <button type="submit" class="button">Добавить лот</button>
     </form>

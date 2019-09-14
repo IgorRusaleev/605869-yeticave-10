@@ -1,13 +1,8 @@
 <?php
-$is_auth = rand(0, 1);
+$is_auth = 0;
+    /*rand(0, 1);*/
 $user_name = 'Игорь Русалеев';
-require_once('helpers.php');
-/*подключение к MySQL*/
-$link = mysqli_connect("localhost", "root", "","yeticave");
-mysqli_set_charset($link, "utf8");
-$ads = [];
-$cats = [];
-$content = '';
+require_once 'init.php';
 if (!$link) {
     $error = mysqli_connect_error();
     $content = include_template('error.php', ['error' => $error]);
@@ -18,13 +13,13 @@ else {
         . 'INNER JOIN lot l ON c.category_id = l.category_id '
         . 'WHERE now() < expiration_date '
         . 'ORDER BY creation_date DESC';
-    $ads = db_fetch_data($link, $sql, $data = []);
+    $lot = db_fetch_data($link, $sql, $data = []);
 }
 /*Получение всех категорий*/
 $sql = 'SELECT * FROM category ORDER BY name_cat ASC';
 $cats = db_fetch_data($link, $sql, $data = []);
 
-$page_content = include_template('main.php', ['ads' => $ads, 'cats' => $cats,]);
+$page_content = include_template('main.php', ['lot' => $lot, 'cats' => $cats,]);
 $layout_content = include_template('layout.php', [
 'content' => $page_content,
 'cats' => $cats,
