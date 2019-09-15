@@ -1,6 +1,7 @@
 <?php
-$is_auth = rand(0, 1);
-$user_name = 'Игорь Русалеев';
+$is_auth = 0;
+rand(0, 1);
+$name_user = 'Игорь Русалеев';
 require_once 'init.php';
 
 if (!$link) {
@@ -158,17 +159,17 @@ else {
          $page_content = include_template('main_add-lot.php', [
              'cats' => $cats,
              'lot' => $lot,
-             'user_name' => $user_name,
+             'name_user' => $name_user,
              'is_auth' => $is_auth]);
      }
      //Если метод не POST, значит форма не была отправлена и валидировать ничего не надо, поэтому просто подключаем шаблон показа формы
   
-$layout_content = include_template('layout_add-lot.php', [
+$layout_content = include_template('layout.php', [
     'content' => $page_content,
     'cats' => $cats,
     'lot' => $lot,
     'title' => 'Добавление лота',
-    'user_name' => $user_name,
+    'name_user' => $name_user,
     'is_auth' => $is_auth]);
 
 print($layout_content);

@@ -1,11 +1,11 @@
 <?php
 $is_auth = 0;
-    /*rand(0, 1);*/
-$user_name = 'Игорь Русалеев';
+rand(0, 1);
+$name_user = 'Игорь Русалеев';
 require_once 'init.php';
 if (!$link) {
     $error = mysqli_connect_error();
-    $content = include_template('error.php', ['error' => $error]);
+    show_error($content, $error);
 }
 else {
     /*Запрос на получение новых, открытых лотов*/
@@ -24,7 +24,7 @@ $layout_content = include_template('layout.php', [
 'content' => $page_content,
 'cats' => $cats,
 'title' => 'Главная страница',
-'user_name' => $user_name,
+'name_user' => $name_user,
 'is_auth' => $is_auth
 ]);
 print($layout_content);

@@ -1,4 +1,5 @@
 <?php
+$is_auth = 0;
 require_once 'init.php';
 
     if (!$link) {
@@ -100,10 +101,12 @@ require_once 'init.php';
 
      $page_content = include_template('main_sign-up.php', $tpl_data);
 
-     $layout_content = include_template('layout_sign-up.php', [
-    'content' => $page_content,
-    'cats' => $cats,
-    'title' => 'Регистрация'
+     $layout_content = include_template('layout.php', [
+         'content' => $page_content,
+         'name_user' => $name_user,
+         'cats' => $cats,
+         'title' => 'Регистрация',
+         'is_auth' => $is_auth
      ]);
 
      print($layout_content);
