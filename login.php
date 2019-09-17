@@ -40,13 +40,11 @@ require_once 'init.php';
             if (password_verify($form['password'], $user['password'])) {
                 //  Если пароль совпадает, то для пользователя открываем сессию
                 $_SESSION['user'] = $user;
-            }
-            // иначе, если пароль неверный, и мы добавляем сообщение об этом в список ошибок
+            } // иначе, если пароль неверный, и мы добавляем сообщение об этом в список ошибок
             else {
                 $errors['password'] = 'Неверный пароль';
             }
-        }
-        // Если пользователь не найден, то записываем это как ошибку валидации
+        } // Если пользователь не найден, то записываем это как ошибку валидации
         else {
             $errors['email'] = 'Такой пользователь не найден';
         }
@@ -54,24 +52,24 @@ require_once 'init.php';
         // Если были ошибки, значит мы снова должны показать форму входа, передав в шаблон список полученных ошибок
         if (count($errors)) {
             $page_content = include_template('main_login.php', ['form' => $form, 'errors' => $errors]);
-        }
-        //Если ошибок нет, значит аутентификация прошла успешно и пользователя можно перенаправить на главную страницу
+        } //Если ошибок нет, значит аутентификация прошла успешно и пользователя можно перенаправить на главную страницу
         else {
             header("Location: /index.php");
             exit();
         }
+    }
 
-        //  Если форма не была отправлена, то проверяем существование сессии с пользователем.
-        else {
-            $page_content = include_template('enter.php', []);
+    //  Если форма не была отправлена, то проверяем существование сессии с пользователем.
+     else {
+            $page_content = include_template('main_login.php', []);
 
             //  Сессия есть - значит пользователь залогинен и ему можно показать главную страницу.
             if (isset($_SESSION['user'])) {
                 header("Location: /index.php");
                 exit();
             }
-        }
-$page_content = include_template('main_login.php']);
+     }
+$page_content = include_template('main_login.php', []);
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'cats' => $cats,

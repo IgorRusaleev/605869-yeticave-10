@@ -1,3 +1,6 @@
+<?php if (!isset($_SESSION['user'])): ?>
+    <?=header('http_response_code(403)'); ?>
+<?php else: ?>
     <form class="form form--add-lot container
     <?php if (count($errors)): ?>
     form--invalid
@@ -20,10 +23,10 @@
                 <select class="<?= $classname; ?>" id="category_id" name="category_id">
                     <option>Выберите категорию</option>
                     <?php foreach ($cats as $cat): ?>
-                    <option value="<?= $cat['category_id'] ?>"
-                        <?php if ($cat['category_id'] == $lot['category_id']): ?>selected<?php endif; ?>>
-                        <?=htmlspecialchars($cat['name_cat'] . ' (' . $cat['character_code'] . ')');?>
-                    </option>
+                        <option value="<?= $cat['category_id'] ?>"
+                                <?php if ($cat['category_id'] == $lot['category_id']): ?>selected<?php endif; ?>>
+                            <?=htmlspecialchars($cat['name_cat'] . ' (' . $cat['character_code'] . ')');?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
                 <span class="form__error"><?=$errors['category_id'] ?? ""; ?></span>
@@ -82,3 +85,4 @@
         </span>
         <button type="submit" class="button">Добавить лот</button>
     </form>
+<?php endif; ?>
