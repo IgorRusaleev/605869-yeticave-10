@@ -33,6 +33,28 @@ require_once 'init.php';
             }
         }
 
+        $rules = [
+            'email' => function () use ($email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    return null;
+                } else {
+                    return "E-mail адрес '$email' указан неверно";
+                }
+            },
+            'password' => function () {
+                return validateLength('password', 6, 20);
+            }
+        ];
+
+        /*Применяем функции ко всем полям формы*/
+        foreach ($_POST as $key => $value) {
+            if (isset($rules[$key])) {
+                $rule = $rules[$key];
+                /*Результат работы функций записывается в массив ошибок*/
+                $errors[$key] = $rule();
+            }
+        }
+
         //  Найдем в таблице users пользователя с переданным email.
         $email = mysqli_real_escape_string($link, $form['email']);
         $sql = "SELECT * FROM user WHERE email = '$email'";
