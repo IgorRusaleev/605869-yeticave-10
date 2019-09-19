@@ -1,5 +1,4 @@
 <?php
-$is_auth = 0;
 require_once 'init.php';
 
     if (!$link) {
@@ -18,13 +17,19 @@ require_once 'init.php';
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //  Определяем обязательные для заполнения поля, а также массив, где будут храниться ошибки
         $form = $_POST;
+        $errors = [];
+
+        $email = $_POST["email"];
+        $password = $_POST["password"];
 
         $required = ['email', 'password'];
-        $errors = [];
-        // Проверяем все поля на заполненность
-        foreach ($required as $field) {
-            if (empty($form[$field])) {
-                $errors[$field] = 'Это поле надо заполнить';
+
+        /*проверяем существование каждого поля в списке обязательных к заполнению*/
+        foreach ($required as $key) {
+            if (empty($form[$key])) {
+
+                /*если поле не заполнено, то добавляем ошибку валидации в список ошибок*/
+                $errors[$key] = 'Это поле надо заполнить';
             }
         }
 
@@ -74,8 +79,7 @@ $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'cats' => $cats,
     'title' => 'Вход',
-    'name_user' => $name_user,
-    'is_auth' => $is_auth
+    'name_user' => $name_user
 ]);
 print($layout_content);
 ?>

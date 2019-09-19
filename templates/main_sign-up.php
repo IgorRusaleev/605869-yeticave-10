@@ -1,8 +1,10 @@
-<form class="form container
+<?php if (!isset($_SESSION['user'])): ?>
+    <?=header('http_response_code(403)'); ?>
+<?php else: ?>
+    <form class="form container
     <?php if (count($errors)): ?>
     form--invalid
     <?php endif; ?>" action="../sign-up.php" method="post" enctype="multipart/form-data">
-    <?php print_r($_POST); ?>
     <h2>Регистрация нового аккаунта</h2>
     <div class="form__item
     <?php if (isset($errors['email'])): ?>
@@ -40,3 +42,6 @@
     <button type="submit" class="button">Зарегистрироваться</button>
     <a class="text-link" href="#">Уже есть аккаунт</a>
 </form>
+<?php endif; ?>
+
+
