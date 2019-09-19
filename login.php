@@ -19,19 +19,17 @@ require_once 'init.php';
         $form = $_POST;
         $errors = [];
 
+        //  Найдем в таблице users пользователя с переданным email.
+        $email = mysqli_real_escape_string($link, $form['email']);
+        $sql = "SELECT * FROM user WHERE email = '$email'";
+        $res = mysqli_query($link, $sql);
+
+        $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+
         $email = $_POST["email"];
         $password = $_POST["password"];
 
         $required = ['email', 'password'];
-
-        /*проверяем существование каждого поля в списке обязательных к заполнению*/
-        foreach ($required as $key) {
-            if (empty($form[$key])) {
-
-                /*если поле не заполнено, то добавляем ошибку валидации в список ошибок*/
-                $errors[$key] = 'Это поле надо заполнить';
-            }
-        }
 
         $rules = [
             'email' => function () use ($email) {
@@ -55,25 +53,34 @@ require_once 'init.php';
             }
         }
 
-        //  Найдем в таблице users пользователя с переданным email.
-        $email = mysqli_real_escape_string($link, $form['email']);
-        $sql = "SELECT * FROM user WHERE email = '$email'";
-        $res = mysqli_query($link, $sql);
+        /*массив отфильтровываем, чтобы удалить от туда пустые значения и оставить только сообщения об ошибках*/
+        $errors = array_filter($errors);
 
-        $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+        /*проверяем существование каждого поля в списке обязательных к заполнению*/
+        foreach ($required as $key) {
+            if (empty($form[$key])) {
 
-        if (!count($errors) and $user) {
-            //  Проверяем, что сохраненный хеш пароля и введенный пароль из формы совпадают
-            if (password_verify($form['password'], $user['password'])) {
-                //  Если пароль совпадает, то для пользователя открываем сессию
-                $_SESSION['user'] = $user;
-            } // иначе, если пароль неверный, и мы добавляем сообщение об этом в список ошибок
-            else {
-                $errors['password'] = 'Неверный пароль';
+                /*если поле не заполнено, то добавляем ошибку валидации в список ошибок*/
+                $errors[$key] = 'Все поля необходимо заполнить';
             }
-        } // Если пользователь не найден, то записываем это как ошибку валидации
-        else {
-            $errors['email'] = 'Такой пользователь не найден';
+            else {
+
+                if (!count($errors) and $user) {
+                    //  Проверяем, что сохраненный хеш пароля и введенный пароль из формы совпадают
+                    if (password_verify($form['password'], $user['password'])) {
+                        //  Если пароль совпадает, то для пользователя открываем сессию
+                        $_SESSION['user'] = $user;
+                    }
+                    // иначе, если пароль неверный, и мы добавляем сообщение об этом в список ошибок
+                    else {
+                        $errors['password'] = 'Неверный пароль';
+                    }
+                }
+                // Если пользователь не найден, то записываем это как ошибку валидации
+                else {
+                    $errors['email'] = 'Такой пользователь не найден';
+                }
+            }
         }
 
         // Если были ошибки, значит мы снова должны показать форму входа, передав в шаблон список полученных ошибок
@@ -96,7 +103,7 @@ require_once 'init.php';
                 exit();
             }
      }
-$page_content = include_template('main_login.php', []);
+
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'cats' => $cats,
