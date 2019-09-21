@@ -1,6 +1,5 @@
 <form class="form container" action="../login.php" method="post">
     <h2>Вход</h2>
-    <?php print_r($user); ?>
     <div class="form__item"
         <?php if (isset($errors['email'])): ?> form__item--invalid <?php endif; ?>">
         <label for="email">E-mail <sup>*</sup></label>

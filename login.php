@@ -1,6 +1,5 @@
 <?php
 require_once 'init.php';
-
     if (!$link) {
         $error = mysqli_connect_error();
         show_error($content, $error);
@@ -12,25 +11,19 @@ require_once 'init.php';
             $cats = mysqli_fetch_all($result, MYSQLI_ASSOC);
         }
     }
-
     //  Проверяем, что форма была отправлена
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //  Определяем обязательные для заполнения поля, а также массив, где будут храниться ошибки
         $form = $_POST;
         $errors = [];
-
         //  Найдем в таблице users пользователя с переданным email.
         $email = mysqli_real_escape_string($link, $form['email']);
         $sql = "SELECT * FROM user WHERE email = '$email'";
         $res = mysqli_query($link, $sql);
-
         $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
-
         $email = $_POST["email"];
         $password = $_POST["password"];
-
         $required = ['email', 'password'];
-
         $rules = [
             'email' => function () use ($email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -43,7 +36,6 @@ require_once 'init.php';
                 return validateLength('password', 6, 20);
             }
         ];
-
         /*Применяем функции ко всем полям формы*/
         foreach ($_POST as $key => $value) {
             if (isset($rules[$key])) {
@@ -52,19 +44,15 @@ require_once 'init.php';
                 $errors[$key] = $rule();
             }
         }
-
         /*массив отфильтровываем, чтобы удалить от туда пустые значения и оставить только сообщения об ошибках*/
         $errors = array_filter($errors);
-
         /*проверяем существование каждого поля в списке обязательных к заполнению*/
         foreach ($required as $key) {
             if (empty($form[$key])) {
-
                 /*если поле не заполнено, то добавляем ошибку валидации в список ошибок*/
                 $errors[$key] = 'Все поля необходимо заполнить';
             }
             else {
-
                 if (!count($errors) and $user) {
                     //  Проверяем, что сохраненный хеш пароля и введенный пароль из формы совпадают
                     if (password_verify($form['password'], $user['password'])) {
@@ -82,7 +70,6 @@ require_once 'init.php';
                 }
             }
         }
-
         // Если были ошибки, значит мы снова должны показать форму входа, передав в шаблон список полученных ошибок
         if (count($errors)) {
             $page_content = include_template('main_login.php', ['form' => $form, 'errors' => $errors]);
@@ -92,7 +79,6 @@ require_once 'init.php';
             exit();
         }
     }
-
     //  Если форма не была отправлена, то проверяем существование сессии с пользователем.
      else {
             $page_content = include_template('main_login.php', []);
@@ -103,7 +89,6 @@ require_once 'init.php';
                 exit();
             }
      }
-
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'cats' => $cats,
