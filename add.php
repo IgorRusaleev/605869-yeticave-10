@@ -160,10 +160,8 @@ if (isset($_SESSION['user'])) {
          }
      }
      else {
-         $page_content = include_template('main_add-lot.php', [
-             'cats' => $cats,
-             'lot' => $lot,
-             'name_user' => $name_user]);
+         header('http_response_code(403)');
+         $page_content = include_template('main_add-lot.php', []);
      }
      //Если метод не POST, значит форма не была отправлена и валидировать ничего не надо, поэтому просто подключаем шаблон показа формы
   
@@ -173,6 +171,5 @@ $layout_content = include_template('layout.php', [
     'lot' => $lot,
     'title' => 'Добавление лота',
     'name_user' => $name_user]);
-
 print($layout_content);
 ?>
