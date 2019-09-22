@@ -1,4 +1,7 @@
 <?php
+$is_auth = 0;
+$is_auth = rand(0, 1);
+$name_user = 'Игорь Русалеев';
 require_once 'init.php';
 
 if (isset($_GET["id"])) {
@@ -11,7 +14,7 @@ $id = htmlspecialchars($_GET["id"]) ?? header('http_response_code(404)');
 
 if (!$link) {
     $error = mysqli_connect_error();
-    $content = include_template('error.php', ['error' => $error]);
+    show_error($content, $error);
 }
 else {
     /*Запрос на получение новых, открытых лотов*/
@@ -28,14 +31,16 @@ else {
 /*Получение всех категорий*/
 $sql = "SELECT * FROM category ORDER BY name_cat ASC";
 $cats = db_fetch_data($link, $sql, $data = []);
-$is_auth = rand(0, 1);
+
 $title = $lot[0]["name_lot"];
 $page_content = include_template("main_lot.php", ["is auth" => $is_auth, "lot" => $lot, "cats" => $cats]);
-$layout_content = include_template("layout_lot.php", [
+$layout_content = include_template("layout.php", [
     "content" => $page_content,
     "cats" => $cats,
     'title' => $title,
-    "lot" => $lot
+    "lot" => $lot,
+    'name_user' => $name_user,
+    'is_auth' => $is_auth
 ]);
 print($layout_content);
 ?>

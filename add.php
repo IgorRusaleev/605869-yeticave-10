@@ -1,8 +1,6 @@
 <?php
-$is_auth = rand(0, 1);
-$user_name = 'Игорь Русалеев';
 require_once 'init.php';
-
+$name_user = [];
 if (!$link) {
     $error = mysqli_connect_error();
     show_error($content, $error);
@@ -16,6 +14,12 @@ else {
         $cats = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $cats_ids = array_column($cats, 'category_id');
     }
+}
+
+if (isset($_SESSION['user'])) {
+    $name_user = $_SESSION['user']['name_user'];
+    $sql_user = 'SELECT * FROM user WHERE name_user = "$name_user"';
+    $user = db_fetch_data($link, $sql, $data = []);
 }
 
      /*проверяем метод отправки формы*/
@@ -142,10 +146,11 @@ else {
                  'category_id' => $category_id
                  ];
              $sql = 'INSERT INTO lot (creation_date, name_lot, description, image, initial_price, expiration_date,
-                 step_rate, user_id, category_id) VALUES (NOW(), ?, ?, ?, ?,  ?, ?, 1, ?)';
+                 step_rate, user_id, category_id) VALUES (NOW(), ?, ?, ?, ?,  ?, ?, ?, ?)';
 
              /*Подготавливаем выражение*/
-             $stmt = db_get_prepare_stmt($link, $sql, $lot);
+             $stmt = db_get_prepare_stmt($link, $sql, [$lot['name_lot'], $lot['description'], $lot['image'], $lot['initial_price'],
+                 $lot['expiration_date'], $lot['step_rate'], $user['user_id'], $lot['category_id']]);
              $res = mysqli_stmt_execute($stmt);
 
              if ($res) {
@@ -155,21 +160,16 @@ else {
          }
      }
      else {
-         $page_content = include_template('main_add-lot.php', [
-             'cats' => $cats,
-             'lot' => $lot,
-             'user_name' => $user_name,
-             'is_auth' => $is_auth]);
+         header('http_response_code(403)');
+         $page_content = include_template('main_add-lot.php', []);
      }
      //Если метод не POST, значит форма не была отправлена и валидировать ничего не надо, поэтому просто подключаем шаблон показа формы
   
-$layout_content = include_template('layout_add-lot.php', [
+$layout_content = include_template('layout.php', [
     'content' => $page_content,
     'cats' => $cats,
     'lot' => $lot,
     'title' => 'Добавление лота',
-    'user_name' => $user_name,
-    'is_auth' => $is_auth]);
-
+    'name_user' => $name_user]);
 print($layout_content);
 ?>
