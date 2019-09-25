@@ -1,8 +1,11 @@
 <?php if (!isset($_SESSION['user'])): ?>
-    <?=header('http_response_code(403)'); ?>
+    <?php
+    header('http_response_code(403)');
+    die();
+    ?>
 <?php else: ?>
     <form class="form form--add-lot container
-    <?php if (count($errors)): ?>
+    <?php if (count($errors[])): ?>
     form--invalid
     <?php endif; ?>" action="../add.php" method="post" enctype="multipart/form-data">
         <h2>Добавление лота</h2>
@@ -20,7 +23,7 @@
             form__item--invalid
             <?php endif; ?>">
                 <label for="category">Категория <sup>*</sup></label>
-                <select class="<?= $classname; ?>" id="category_id" name="category_id">
+                <select id="category_id" name="category_id">
                     <option>Выберите категорию</option>
                     <?php foreach ($cats as $cat): ?>
                         <option value="<?= $cat['category_id'] ?>"

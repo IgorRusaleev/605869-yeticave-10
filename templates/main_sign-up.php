@@ -1,5 +1,8 @@
 <?php if (!isset($_SESSION['user'])): ?>
-    <?=header('http_response_code(403)'); ?>
+    <?php
+    header('http_response_code(403)');
+    die();
+    ?>
 <?php else: ?>
     <form class="form container
     <?php if (count($errors)): ?>
