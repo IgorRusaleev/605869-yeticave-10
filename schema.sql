@@ -36,3 +36,5 @@ CREATE TABLE user (
                       avatar CHAR (128),
                       contact_information CHAR(128)
 );
+CREATE FULLTEXT INDEX lot_ft_search
+    ON lot(name_lot, description);
