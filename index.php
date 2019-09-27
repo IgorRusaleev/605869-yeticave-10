@@ -35,20 +35,13 @@ else {
         . 'WHERE now() < expiration_date '
         . 'ORDER BY creation_date DESC LIMIT ' . $page_items . ' OFFSET ' . $offset;
     $lot = db_fetch_data($link, $sql, $data = []);
-
-    if ($lot = mysqli_query($link, $sql)) {
-        $tpl_data = [
-            'lot' => $lot,
-            'cats' => $cats,
-            'pages' => $pages,
-            'pages_count' => $pages_count,
-            'cur_page' => $cur_page
-        ];
-        $page_content = include_template('main.php', $tpl_data);
-    }
-    else {
-        show_error($content, mysqli_error($link));
-    }
+    $page_content = include_template('main.php', [
+        'lot' => $lot,
+        'cats' => $cats,
+        'pages' => $pages,
+        'pages_count' => $pages_count,
+        'cur_page' => $cur_page
+    ]);
 }
 
 $layout_content = include_template('layout.php', [
