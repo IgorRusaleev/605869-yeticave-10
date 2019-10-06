@@ -2,7 +2,7 @@
 require_once 'init.php';
     if (!$link) {
         $error = mysqli_connect_error();
-        show_error($content, $error);
+        $page_content = include_template("error.php", ["error" => $error]);
     }
     else {
         $sql = "SELECT * FROM category ORDER BY name_cat ASC";

@@ -1,19 +1,18 @@
 <?php
 require_once 'init.php';
+if (isset($_SESSION['user'])) {
+    $name_user = $_SESSION['user']['name_user'];
+    $user_id = $_SESSION['user']['user_id'];
+}
+
 if (!$link) {
     $error = mysqli_connect_error();
-    show_error($content, $error);
+    $page_content = include_template("error.php", ["error" => $error]);
 }
 else {
     /*Получение всех категорий*/
     $sql_cat = 'SELECT * FROM category ORDER BY name_cat ASC';
     $cats = db_fetch_data($link, $sql_cat, $data = []);
-
-    if (isset($_SESSION['user'])) {
-        $name_user = $_SESSION['user']['name_user'];
-        $sql_user = 'SELECT * FROM user WHERE name_user = "$name_user"';
-        $user = db_fetch_data($link, $sql, $data = []);
-    }
 
     //Получаем текущую страницу. Определяем число лотов на странице
     $cur_page = $_GET['page'] ?? 1;

@@ -38,11 +38,10 @@ function get_dt_range($input) {
     $today = date_create("now");
     $dif = date_diff($next_date, $today);
     $day_count = date_interval_format($dif, "%d");
-    $hour_count = date_interval_format($dif, "%H") + ($day_count * 24);
+    $hour_count = date_interval_format($dif, "%H");
     $min_count = date_interval_format($dif, "%I");
-    $hour_and_min_count = str_pad($hour_count, 6, ", $min_count", STR_PAD_RIGHT);
-    $hour_and_min = ['hour' => $hour_count, 'min' => $min_count];
-    return $hour_and_min;
+    $day_hour_and_min = ['day' => $day_count,'hour' => $hour_count, 'min' => $min_count];
+    return $day_hour_and_min;
 }
 
 /*функция для получения значения поля*/

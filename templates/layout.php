@@ -35,7 +35,7 @@
                     <?php else: ?>
                         <a class="main-header__add-lot button" href="../add.php">Добавить лот</a>
                         <div class="user-menu__logged">
-                            <p><?=strip_tags($_SESSION['user']['name_user']); ?></p>
+                            <a href="../my-bets.php"><p><?=strip_tags($_SESSION['user']['name_user']); ?></p></a>
                             <a class="user-menu__logout" href="../logout.php">Выход</a>
                         </div>
                     <?php endif; ?>
