@@ -47,6 +47,7 @@ $layout_content = include_template('layout.php', [
 'content' => $page_content,
 'cats' => $cats,
 'title' => 'Главная страница',
+    'items_count' => $items_count,
 'name_user' => $name_user
 ]);
 print($layout_content);

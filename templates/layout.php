@@ -25,7 +25,6 @@
                     <input class="main-header__search-btn" type="submit" name="find" value="Найти">
                 </form>
 
-
                 <nav class="user-menu">
                     <?php if (!isset($_SESSION['user'])): ?>
                         <ul class="user-menu__list">

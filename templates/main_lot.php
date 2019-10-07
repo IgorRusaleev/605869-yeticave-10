@@ -13,9 +13,17 @@
                 <div class="lot__timer timer
                 <?php if (get_dt_range($lot[0]["expiration_date"])['hour'] < 1): ?>
                 timer--finishing
-                <?php endif; ?>">Осталось времени:<br/>
-                    <?=get_dt_range($lot[0]["expiration_date"])["hour"];?> ч.
-                    <?=get_dt_range($lot[0]["expiration_date"])["min"];?> мин.
+                <?php endif; ?>">
+                    До завершения осталось:<br/>
+                    <?php if (get_dt_range($lot[0]["expiration_date"])['day'] == 0): ?>
+                    <?php else:?>
+                        <?=get_dt_range($lot[0]["expiration_date"])['day'] . get_noun_plural_form(get_dt_range($lot[0]["expiration_date"])['day'],' день ', ' дня ', ' дней ');?>
+                    <?php endif; ?>
+                    <?php if (get_dt_range($lot[0]["expiration_date"])['hour'] == 0): ?>
+                    <?php else:?>
+                        <?=get_dt_range($lot[0]["expiration_date"])['hour'] . get_noun_plural_form(get_dt_range($lot[0]["expiration_date"])['hour'],' час ', ' часа ', ' часов ');?>
+                    <?php endif; ?>
+                    <?=get_dt_range($lot[0]["expiration_date"])['min'] . get_noun_plural_form(get_dt_range($lot[0]["expiration_date"])['min'],' минута ', ' минуты ', ' минут ');?>
                 </div>
                 <div class="lot-item__cost-state">
                     <div class="lot-item__rate">

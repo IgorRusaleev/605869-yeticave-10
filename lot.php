@@ -104,7 +104,6 @@ $layout_content = include_template("layout.php", [
     "cats" => $cats,
     'title' => $title,
     "lot" => $lot,
-    "cost" => $cost,
     'name_user' => $name_user
 ]);
 print($layout_content);
