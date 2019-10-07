@@ -22,7 +22,7 @@ CREATE TABLE lot (
 );
 CREATE TABLE rate (
                       rate_id INT AUTO_INCREMENT PRIMARY KEY,
-                      date DATETIME,
+                      date_rate DATETIME,
                       rate DECIMAL(10,2),
                       user_id INT,
                       lot_id INT

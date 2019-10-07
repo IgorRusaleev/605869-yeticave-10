@@ -39,9 +39,16 @@
                             <div class="lot__timer timer
                             <?php if (get_dt_range($d['expiration_date'])['hour'] < 1): ?>
                             timer--finishing
-                            <?php endif; ?>">Осталось времени:<br/>
-                                <?=get_dt_range($d['expiration_date'])['hour'];?> ч.
-                                <?=get_dt_range($d['expiration_date'])['min'];?> мин.
+                            <?php endif; ?>">До завершения осталось:<br/>
+                                <?php if (get_dt_range($d['expiration_date'])['day'] == 0): ?>
+                                <?php else:?>
+                                    <?=get_dt_range($d['expiration_date'])['day'] . get_noun_plural_form(get_dt_range($d['expiration_date'])['day'],' день ', ' дня ', ' дней ');?>
+                                <?php endif; ?>
+                                <?php if (get_dt_range($d['expiration_date'])['hour'] == 0): ?>
+                                <?php else:?>
+                                    <?=get_dt_range($d['expiration_date'])['hour'] . get_noun_plural_form(get_dt_range($d['expiration_date'])['hour'],' час ', ' часа ', ' часов ');?>
+                                <?php endif; ?>
+                                <?=get_dt_range($d['expiration_date'])['min'] . get_noun_plural_form(get_dt_range($d['expiration_date'])['min'],' минута ', ' минуты ', ' минут ');?>
                             </div>
                         </div>
                     </div>
@@ -49,26 +56,21 @@
             <?php endforeach;?>
         </ul>
     </section>
-
     <ul class="pagination-list">
-
         <?php if ($cur_page == 1): ?>
             <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
         <?php else: ?>
             <li class="pagination-item pagination-item-next"><a href="/?page=<?=($cur_page - 1);?>">Назад</a></li>
         <?php endif; ?>
-
         <?php foreach ($pages as $page): ?>
             <li class="pagination__item <?php if ($page == $cur_page): ?>pagination__item--active<?php else: ?><?php endif; ?>">
                 <a href="/?page=<?=$page;?>"><?=$page;?></a>
             </li>
         <?php endforeach; ?>
-
         <?php if ($pages_count == $cur_page): ?>
             <li class="pagination-item pagination-item-next"><a>Вперед</a></li>
         <?php else: ?>
             <li class="pagination-item pagination-item-next"><a href="/?page=<?=($cur_page + 1);?>">Вперед</a></li>
         <?php endif; ?>
-
     </ul>
 </div>
