@@ -56,26 +56,21 @@
             <?php endforeach;?>
         </ul>
     </section>
-
     <ul class="pagination-list">
-
         <?php if ($cur_page == 1): ?>
             <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
         <?php else: ?>
             <li class="pagination-item pagination-item-next"><a href="/?page=<?=($cur_page - 1);?>">Назад</a></li>
         <?php endif; ?>
-
         <?php foreach ($pages as $page): ?>
             <li class="pagination__item <?php if ($page == $cur_page): ?>pagination__item--active<?php else: ?><?php endif; ?>">
                 <a href="/?page=<?=$page;?>"><?=$page;?></a>
             </li>
         <?php endforeach; ?>
-
         <?php if ($pages_count == $cur_page): ?>
             <li class="pagination-item pagination-item-next"><a>Вперед</a></li>
         <?php else: ?>
             <li class="pagination-item pagination-item-next"><a href="/?page=<?=($cur_page + 1);?>">Вперед</a></li>
         <?php endif; ?>
-
     </ul>
 </div>
