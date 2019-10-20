@@ -1,7 +1,6 @@
 <?php
-$is_auth = 0;
 require_once 'init.php';
-
+require_once 'vendor/autoload.php';
     if (!$link) {
         $error = mysqli_connect_error();
         show_error($content, $error);
@@ -105,8 +104,7 @@ require_once 'init.php';
          'content' => $page_content,
          'name_user' => $name_user,
          'cats' => $cats,
-         'title' => 'Регистрация',
-         'is_auth' => $is_auth
+         'title' => 'Регистрация'
      ]);
 
      print($layout_content);

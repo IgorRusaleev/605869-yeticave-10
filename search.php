@@ -1,5 +1,6 @@
 <?php
 require_once 'init.php';
+require_once 'vendor/autoload.php';
    if (!$link) {
        $error = mysqli_connect_error();
        show_error($content, $error);

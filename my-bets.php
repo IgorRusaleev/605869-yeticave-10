@@ -1,5 +1,6 @@
 <?php
 require_once 'init.php';
+require_once 'vendor/autoload.php';
 if (isset($_SESSION['user'])) {
     $name_user = $_SESSION['user']['name_user'];
     $user_id = $_SESSION['user']['user_id'];
